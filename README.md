@@ -29,16 +29,20 @@ replace sample_in.txt with the name of the textfile
 ## Screenshots
 ## Individual contribution (Function-wise)
 > Brian Chan 16 
-> Christine Au-yeung 160634760 @ChristineAu-yeung
+> Christine Au-yeung 160634760 [Github](https://github.com/ChristineAu-yeung)
 ## Features
 ## Tests
 ## Code Example
 ## Authors
-> Brian Chan
-> Christine Au-yeung
+``` 
+Brian Chan
+Christine Au-yeung
+```
 ## Credits
-> Brian Chan
-> Christine Au-yeung
+``` 
+Brian Chan
+Christine Au-yeung
+```
 ## License
 MIT License
 
