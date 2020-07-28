@@ -10,8 +10,8 @@ Assignment to practice the concept of deadlock avoidance for CP386 (Wilfrid Laur
 3. Run on Linux by changing the directory to the folder
 ```
 cd FOLDER_NAME
-replace FOLDER_NAME with the name of the folder
 ```
+*replace FOLDER_NAME with the name of the folder*
 4. To run, use makefile
 To compile your program:
 ```
@@ -23,13 +23,18 @@ make warnings_OK
 To run your program:
 ``` 
 ./FILE_NAME sample_in.txt
-replace FILE_NAME with the name of the file 
-replace sample_in.txt with the name of the textfile
 ```
+*replace FILE_NAME with the name of the file 
+replace sample_in.txt with the name of the textfile*
+
 ## Screenshots
 ## Individual contribution (Function-wise)
-> Brian Chan 16 
-> Christine Au-yeung 160634760 [Github](https://github.com/ChristineAu-yeung)
+``` 
+Brian Chan 16
+```
+```
+Christine Au-yeung 160634760 [Github](https://github.com/ChristineAu-yeung)
+```
 ## Features
 ## Tests
 ## Code Example
