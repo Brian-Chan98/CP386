@@ -29,12 +29,8 @@ replace sample_in.txt with the name of the textfile*
 
 ## Screenshots
 ## Individual contribution (Function-wise)
-``` 
-Brian Chan 16
-```
-```
-Christine Au-yeung 160634760 [Github](https://github.com/ChristineAu-yeung)
-```
+> Brian Chan 16
+> Christine Au-yeung 160634760 [Github](https://github.com/ChristineAu-yeung)
 ## Features
 ## Tests
 ## Code Example
