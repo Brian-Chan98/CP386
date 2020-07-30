@@ -29,7 +29,7 @@ replace sample_in.txt with the name of the textfile*
 
 ## Screenshots
 ## Individual contribution (Function-wise)
-Brian Chan 16</p>
+Brian Chan 171884160 [Github](https://github.com/Brian-Chan98)</p>
 Christine Au-yeung 160634760 [Github](https://github.com/ChristineAu-yeung)
 ## Features
 ## Tests
