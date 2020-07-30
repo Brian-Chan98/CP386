@@ -36,11 +36,17 @@ int main(int argc, char *argv[])
 
 	Customer customers;
 	int customercount = readfile(FILE_NAME, customers); 
+<<<<<<< HEAD
 	printf("%d",customercount);
 	//printf("%d",customers.resource[0][0]);
+=======
+	// printf("%d",customercount);
+	// printf("%d",customers.resource[0][0]);
+>>>>>>> master
 	int counter = 0;
 	while(counter < customercount){
 		for(int i = 0; i < 4; i++){
+			printf("hi");
 			// printf("%d",customers.resource[counter][i]);
 		}
 		printf("\n");
@@ -111,7 +117,6 @@ int readfile(char* filename, Customer customers) {
 		token =  strtok(lines[k],",");
 		while(token!=NULL)
 		{
-			Customer customer;
 			for (j = 0; j < 4; j++) {
 				printf("%s",token);
 				customers.resource[k][j] = atoi(token);
