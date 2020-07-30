@@ -7,7 +7,6 @@
 #include <time.h>
 #include <semaphore.h>
 
-//test comment for push
 
 #define NUMBER_OF_CUSTOMERS 5
 #define NUMBER_OF_RESOURCES 4
@@ -37,8 +36,8 @@ int main(int argc, char *argv[])
 
 	Customer customers;
 	int customercount = readfile(FILE_NAME, customers); 
-	// printf("%d",customercount);
-	printf("%d",customers.resource[0][0]);
+	printf("%d",customercount);
+	//printf("%d",customers.resource[0][0]);
 	int counter = 0;
 	while(counter < customercount){
 		for(int i = 0; i < 4; i++){
@@ -114,7 +113,7 @@ int readfile(char* filename, Customer customers) {
 		{
 			Customer customer;
 			for (j = 0; j < 4; j++) {
-				// printf("%s",token);
+				printf("%s",token);
 				customers.resource[k][j] = atoi(token);
 				// printf("%d",customers.resource[k][j]);
 				token = strtok(NULL,",");
