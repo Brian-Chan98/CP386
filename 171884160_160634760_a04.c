@@ -69,7 +69,7 @@ int readfile(char* filename) {
 		printf("Error in opening input file...exiting with error code -1\n");
 		return -1;
 	}
-struct stat st;
+	struct stat st;
 	fstat(fileno(in), &st);
 	char* fileContent = (char*)malloc(((int)st.st_size+1)* sizeof(char));
 	fileContent[0]='\0';	
