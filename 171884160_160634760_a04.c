@@ -14,10 +14,7 @@
 
 typedef struct customer { // not sure if this is needed
 	int customerID;
-	int resource1;
-	int resource2;
-	int resource3;
-	int resource4;
+	int resource[10][10];
 } Customer;
 
 int available[NUMBER_OF_RESOURCES]; // what else am I missing?
@@ -27,7 +24,7 @@ int need[NUMBER_OF_CUSTOMERS][NUMBER_OF_RESOURCES];
 int request_resources(int customer_num, int request[]); // RQ
 int release_resoucres(int customer_num, int release[]); // RL
 int safety_algo(int customer_num);
-int readfile(char* file_name);
+int readfile(char* file_name, Customer customers);
 
 int main(int argc, char *argv[])
 {
@@ -36,19 +33,18 @@ int main(int argc, char *argv[])
 		printf("Need 4 values\n");
 		return -1;
 	}
-	
-	int resources[4], counter;
-	for(counter=1;counter<argc;counter++){
-		resources[counter] = atoi(argv[counter]);
-		// printf("%d\n", resources[counter]);
-	}
 
-	int customercount = readfile(FILE_NAME);
-
-	Customer* customers;
-	while(customercount != 0){
-		printf("hi\n");
-		customercount--;
+	Customer customers;
+	int customercount = readfile(FILE_NAME, customers); 
+	// printf("%d",customercount);
+	printf("%d",customers.resource[0][0]);
+	int counter = 0;
+	while(counter < customercount){
+		for(int i = 0; i < 4; i++){
+			// printf("%d",customers.resource[counter][i]);
+		}
+		printf("\n");
+		counter++;
 	}
 	// read file
 
@@ -61,14 +57,15 @@ int main(int argc, char *argv[])
 
 }
 
-int readfile(char* filename) {
+int readfile(char* filename, Customer customers) {
 
 	FILE *in = fopen(filename, "r");
 	if(!in)
 	{
-		printf("Error in opening input file...exiting with error code -1\n");
+		printf("Child A: Error in opening input file...exiting with error code -1\n");
 		return -1;
 	}
+
 	struct stat st;
 	fstat(fileno(in), &st);
 	char* fileContent = (char*)malloc(((int)st.st_size+1)* sizeof(char));
@@ -82,6 +79,7 @@ int readfile(char* filename) {
 		}
 	}
 	fclose(in);
+
 	char* command = NULL;
 	int customerCount = 0;
 	char* fileCopy = (char*)malloc((strlen(fileContent)+1)*sizeof(char));
@@ -92,6 +90,7 @@ int readfile(char* filename) {
 		customerCount++;
 		command = strtok(NULL,"\r\n");
 	}
+	// customers = (Customer) malloc(sizeof(Customer)*customerCount);
 
 	char* lines[customerCount];
 	command = NULL;
@@ -109,26 +108,18 @@ int readfile(char* filename) {
 	{
 		char* token = NULL;
 		int j = 0;
-		token =  strtok(lines[k],";");
+		token =  strtok(lines[k],",");
 		while(token!=NULL)
 		{
-//this loop tokenizes each line of input file
-//write your code here to populate instances of Thread to build a collection
 			Customer customer;
-			customer.customerID = k;
-			if(j==0)
-				customer.resource1 = atoi(token);
-				printf("%s\n",token);
-				printf("%d\n",customer.resource1);
-			if(j==1)
-				customer.resource2 = atoi(token);
-			if(j==2)
-				customer.resource3 = atoi(token);
-			if(j==3)
-				customer.resource4 = atoi(token);
-			j++;
-			token = strtok(NULL,";");
+			for (j = 0; j < 4; j++) {
+				// printf("%s",token);
+				customers.resource[k][j] = atoi(token);
+				// printf("%d",customers.resource[k][j]);
+				token = strtok(NULL,",");
+			}	
 		}
 	}
+	// printf("%d",customers.resource[0][0]);
 	return customerCount;
 }
