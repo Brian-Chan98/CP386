@@ -7,11 +7,6 @@
 #include <time.h>
 #include <semaphore.h>
 
-<<<<<<< HEAD
-//test comment for push
-
-=======
->>>>>>> Christine
 #define NUMBER_OF_CUSTOMERS 5
 #define NUMBER_OF_RESOURCES 4
 #define FILE_NAME "sample4_in.txt"
