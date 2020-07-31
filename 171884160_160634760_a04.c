@@ -126,6 +126,7 @@ int main(int argc, char *argv[])
 }
 
 int release_resources(int max[][100], int allocated[], int need[NUMBER_OF_CUSTOMERS][NUMBER_OF_RESOURCES], int customerID){
+	
 	int satisfied = 1;
 
 
