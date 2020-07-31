@@ -22,10 +22,9 @@ make warnings_OK
 ```
 To run your program:
 ``` 
-./FILE_NAME sample_in.txt
+./Assignment_4 10 5 7 8
 ```
-*replace FILE_NAME with the name of the file 
-replace sample_in.txt with the name of the textfile*
+*replace '10 5 7 8' with 4 ints to represent the number of resources available*
 
 ## Screenshots
 ## Individual contribution (Function-wise)
