@@ -72,15 +72,11 @@ int main(int argc, char *argv[])
 	}
 	
 	// interactive loop for user to enter requests RQ, RL or *
-	char command[100];
-	printf("Enter Command: ");
-	while(fgets(command, 100, stdin) != NULL){
+	char* command = malloc(sizeof(char*)*300);
+	while(1){
 	// printf("%s",command);
-		
-		if (command == NULL) {
-			printf("Error: Enter a proper command");
-			return -1;
-		}
+		printf("Enter a command: ");
+        fgets(command, 100, stdin);
 
 		char* token = strtok(command, " ");
 		int array[100];
@@ -100,6 +96,7 @@ int main(int argc, char *argv[])
 		// 		printf("%d",allocated[i][j]);
 		// 	}
 		// 	printf("\n");
+<<<<<<< HEAD
 		// }
 
 
@@ -112,6 +109,20 @@ int main(int argc, char *argv[])
 		// 	printf("\n");
 		// }
 
+=======
+		// }
+
+
+		// memcpy(&allocated[customerID][0], &array[2], sizeof(array)+1);
+		// printf("verifying allocated:\n");
+		// for(int j=0;j<4;j++){
+		// 	for(i=0;i<4;i++){
+		// 		printf("%d ", allocated[j][i]);
+		// 	}
+		// 	printf("\n");
+		// }
+
+>>>>>>> Christine
 		int satisfied = -1;
 		printf("\n");
 
@@ -129,7 +140,11 @@ int main(int argc, char *argv[])
 			}
 		}
 
+<<<<<<< HEAD
 		if(strstr(command,"RL") != NULL){
+=======
+		else if(strstr(command,"RL") != NULL){
+>>>>>>> Christine
 			//copy user input into release array
 			for(int i=0;i<4;i++){
 				input[i] = array[i+2];
@@ -144,24 +159,34 @@ int main(int argc, char *argv[])
 
 		}
 
-		if(strstr(command,"*") != NULL){
+		else if(strstr(command,"*") != NULL){
 			printf("current state");
 		}
 
-		if(strstr(command,"run") != NULL){
+		else if(strstr(command,"run") != NULL){
 			printf("safe sequence");
 		}
+<<<<<<< HEAD
 		
 		printf("Enter Command: ");
+=======
+		else if(strstr(command,"exit") != NULL){
+			printf("Exiting...\n");
+			return 0;
+		}
+>>>>>>> Christine
 	}
 
 
 	printf("\n");
 }
 
+<<<<<<< HEAD
 
 
 
+=======
+>>>>>>> Christine
 int release_resources(int max[][100], int allocated[][100], int need[][NUMBER_OF_RESOURCES], int input[], int customerID){
 	
 	int satisfied = 0;
@@ -169,6 +194,7 @@ int release_resources(int max[][100], int allocated[][100], int need[][NUMBER_OF
 	// for(int i=0;i<4;i++){
 	// 	printf("%d",release[i]);
 	// }
+<<<<<<< HEAD
 
 	//verifies whether it is satisfied
 	for(int i=0; i<4; i++){
@@ -194,6 +220,33 @@ int release_resources(int max[][100], int allocated[][100], int need[][NUMBER_OF
 	// 	printf("%d",allocated[customerID][i]);
 	// }
 
+=======
+
+	//verifies whether it is satisfied
+	for(int i=0; i<4; i++){
+		if(allocated[customerID][i] < input[i]){
+			satisfied = -1;
+		}
+	}
+
+	//frees up allocated and max, changes need to be appropriate
+	if(satisfied == 0){
+		for(int i=0; i<4; i++){
+			allocated[customerID][i] = allocated[customerID][i] - input[i];
+			max[customerID][i] = max[customerID][i] + input[i]; 
+		}
+
+		for(int i=0; i<4; i++){
+			need[customerID][i] = max[customerID][i];
+		}
+	}
+
+	printf("\ncustomer ID:%d -> allocated resource:", customerID);
+	for(int i = 0; i < 4; i++){
+		printf("%d",allocated[customerID][i]);
+	}
+
+>>>>>>> Christine
 	printf("\n");
 	return satisfied;
 }
@@ -213,7 +266,10 @@ int request_resources(int max[][100], int allocated[][100], int need[][NUMBER_OF
 	// 	printf("%d",allocated[i]);
 	// }
 	int satisfied = 0;
+<<<<<<< HEAD
 
+=======
+>>>>>>> Christine
 
 	//verifies whether it is satisfied
 	for(int i=0; i<4; i++){
@@ -235,9 +291,17 @@ int request_resources(int max[][100], int allocated[][100], int need[][NUMBER_OF
 			allocated[customerID][i] = allocated[customerID][i] + input[i];
 		}
 	}
+<<<<<<< HEAD
 
 
 	// printf("\ncustomer ID:%d -> allocated resource:", customerID);
+=======
+	printf("\ncustomer ID:%d -> allocated resource:", customerID);
+	for(int i = 0; i < 4; i++){
+		printf("%d",allocated[customerID][i]);
+	}
+	// printf("\ncustomer ID:%d -> max resource:", customerID);
+>>>>>>> Christine
 	// for(int i = 0; i < 4; i++){
 	// 	printf("%d",allocated[customerID][i]);
 	// }
