@@ -158,85 +158,76 @@ int main(int argc, char *argv[])
 }
 
 int release_resources(int max[][100], int allocated[][100], int need[][NUMBER_OF_RESOURCES], int input[], int customerID){
-	
-	int satisfied = 0;
-	// printf("release:\n");
-	// for(int i=0;i<4;i++){
-	// 	printf("%d",release[i]);
-	// }
+    
+    int satisfied = 0;
+    // printf("release:\n");
+    // for(int i=0;i<4;i++){
+    //     printf("%d",release[i]);
+    // }
 
-	//verifies whether it is satisfied
-	for(int i=0; i<4; i++){
-		if(allocated[customerID][i] < input[i]){
-			satisfied = -1;
-		}
-	}
+    //verifies whether it is satisfied
+    for(int i=0; i<4; i++){
+        if(allocated[customerID][i] < input[i]){
+            satisfied = -1;
+        }
+    }
 
-	//frees up allocated and max, changes need to be appropriate
-	if(satisfied == 0){
-		for(int i=0; i<4; i++){
-			allocated[customerID][i] = allocated[customerID][i] - input[i];
-			max[customerID][i] = max[customerID][i] + input[i]; 
-		}
+    //frees up allocated and max, changes need to be appropriate
+    if(satisfied == 0){
+        for(int i=0; i<4; i++){
+            allocated[customerID][i] = allocated[customerID][i] - input[i];
+            need[customerID][i] = need[customerID][i] + input[i]; 
+        }
+    }
 
-		for(int i=0; i<4; i++){
-			need[customerID][i] = max[customerID][i];
-		}
-	}
+    // printf("\ncustomer ID:%d -> allocated resource:", customerID);
+    // for(int i = 0; i < 4; i++){
+    //     printf("%d",allocated[customerID][i]);
+    // }
 
-	printf("\ncustomer ID:%d -> allocated resource:", customerID);
-	for(int i = 0; i < 4; i++){
-		printf("%d",allocated[customerID][i]);
-	}
-
-	printf("\n");
-	return satisfied;
+    printf("\n");
+    return satisfied;
 }
 
 int request_resources(int max[][100], int allocated[][100], int need[][NUMBER_OF_RESOURCES], int input[], int customerID){
 
-	// printf("customer ID:%d -> max resource:", customerID);
-	// for(int i = 0; i < 4; i++){
-	// 	printf("%d",max[customerID][i]);
-	// }
+    // printf("customer ID:%d -> max resource:", customerID);
+    // for(int i = 0; i < 4; i++){
+    //     printf("%d",max[customerID][i]);
+    // }
 
-	// printf("\nallocated requested resource:");
-	// for(int i=0; i<4; i++){
-	// 	printf("%d",allocated[i]);
-	// }
-	int satisfied = 0;
+    // printf("\nallocated requested resource:");
+    // for(int i=0; i<4; i++){
+    //     printf("%d",allocated[i]);
+    // }
+    int satisfied = 0;
 
-	//verifies whether it is satisfied
-	for(int i=0; i<4; i++){
-		if(max[customerID][i] - input[i] < 0){
-			satisfied = -1;
-		}
-	}
+    //verifies whether it is satisfied
+    for(int i=0; i<4; i++){
+        if(max[customerID][i] - input[i] < 0){
+            satisfied = -1;
+        }
+    }
 
-	//NEED = MAX - ALLOCATED, changes max to be appropriate
-	if(satisfied == 0){
-		// printf("new need:\n");
-		for(int i=0; i<4; i++){
-			need[customerID][i] = max[customerID][i] - input[i];
-			// printf("%d",need[customerID][i]);
-		}
+    //NEED = MAX - ALLOCATED, changes max to be appropriate
+    if(satisfied == 0){
+        // printf("new need:\n");
+        for(int i=0; i<4; i++){
+            need[customerID][i] = max[customerID][i] - input[i];
+            allocated[customerID][i] = allocated[customerID][i] + input[i];
+        }
+    }
+    printf("\ncustomer ID:%d -> allocated resource:", customerID);
+    for(int i = 0; i < 4; i++){
+        printf("%d",allocated[customerID][i]);
+    }
+    // printf("\ncustomer ID:%d -> max resource:", customerID);
+    // for(int i = 0; i < 4; i++){
+    //     printf("%d",allocated[customerID][i]);
+    // }
+    printf("\n");
 
-		for(int i=0; i<4; i++){
-			max[customerID][i] = need[customerID][i];
-			allocated[customerID][i] = allocated[customerID][i] + input[i];
-		}
-	}
-	printf("\ncustomer ID:%d -> allocated resource:", customerID);
-	for(int i = 0; i < 4; i++){
-		printf("%d",allocated[customerID][i]);
-	}
-	// printf("\ncustomer ID:%d -> max resource:", customerID);
-	// for(int i = 0; i < 4; i++){
-	// 	printf("%d",allocated[customerID][i]);
-	// }
-	printf("\n");
-
-	return satisfied;
+    return satisfied;
 }
 
 void current_state(int max[][100], int allocated[][100], int need[NUMBER_OF_CUSTOMERS][NUMBER_OF_RESOURCES], int available[]) {
