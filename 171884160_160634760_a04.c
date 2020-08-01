@@ -176,11 +176,7 @@ int release_resources(int max[][100], int allocated[][100], int need[][NUMBER_OF
 	if(satisfied == 0){
 		for(int i=0; i<4; i++){
 			allocated[customerID][i] = allocated[customerID][i] - input[i];
-			max[customerID][i] = max[customerID][i] + input[i]; 
-		}
-
-		for(int i=0; i<4; i++){
-			need[customerID][i] = max[customerID][i];
+			need[customerID][i] = need[customerID][i] + input[i]; 
 		}
 	}
 
@@ -221,11 +217,6 @@ int request_resources(int max[][100], int allocated[][100], int need[][NUMBER_OF
 		// printf("new need:\n");
 		for(int i=0; i<4; i++){
 			need[customerID][i] = max[customerID][i] - input[i];
-			// printf("%d",need[customerID][i]);
-		}
-
-		for(int i=0; i<4; i++){
-			max[customerID][i] = need[customerID][i];
 			allocated[customerID][i] = allocated[customerID][i] + input[i];
 		}
 	}
