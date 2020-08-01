@@ -7,7 +7,6 @@
 #include <time.h>
 #include <semaphore.h>
 
-
 #define NUMBER_OF_CUSTOMERS 5
 #define NUMBER_OF_RESOURCES 4
 #define FILE_NAME "sample4_in.txt"
@@ -22,6 +21,7 @@ typedef struct customer {
 int request_resources(int max[][100], int allocated[][100], int need[NUMBER_OF_CUSTOMERS][NUMBER_OF_RESOURCES], int input[], int customerID); // RQ
 int release_resources(int max[][100], int allocated[][100], int need[NUMBER_OF_CUSTOMERS][NUMBER_OF_RESOURCES], int input[], int customerID); // RL
 int safety_algo(int customer_num);
+void current_state(int max[][100], int allocated[][100], int need[NUMBER_OF_CUSTOMERS][NUMBER_OF_RESOURCES], int available[]);
 int readfile(char* file_name, Customer** customers);
 
 int main(int argc, char *argv[])
@@ -52,11 +52,12 @@ int main(int argc, char *argv[])
 	}
 
 	printf("Number of Customers: %d\n", customercount);
+	// initialize available
 	for(int i = 1; i < 5; i++){
-		available[i] = atoi(argv[i]);
+		available[i-1] = atoi(argv[i]);
 	}
 	printf("Available Resources: ");
-	for(int i = 1; i < 5; i++){
+	for(int i = 0; i < 4; i++){
 		printf("%d ",available[i]);
 	}
 	printf("\n");
@@ -98,7 +99,6 @@ int main(int argc, char *argv[])
 		// 	printf("\n");
 		// }
 
-
 		// memcpy(&allocated[customerID][0], &array[2], sizeof(array)+1);
 		// printf("verifying allocated:\n");
 		// for(int j=0;j<4;j++){
@@ -109,7 +109,7 @@ int main(int argc, char *argv[])
 		// }
 
 		int satisfied = -1;
-		printf("\n");
+		// printf("\n");
 
 		if(strstr(command,"RQ") != NULL){
 			//copy user input into request array
@@ -124,7 +124,6 @@ int main(int argc, char *argv[])
 				printf("Request is unstatisfied\n");
 			}
 		}
-
 		else if(strstr(command,"RL") != NULL){
 			//copy user input into release array
 			for(int i=0;i<4;i++){
@@ -139,17 +138,18 @@ int main(int argc, char *argv[])
 			}
 
 		}
-
-		else if(strstr(command,"*") != NULL){
-			printf("current state");
-		}
-
 		else if(strstr(command,"run") != NULL){
-			printf("safe sequence");
+			printf("run\n");
+		}
+		else if(strstr(command,"*") != NULL){
+			current_state(max,allocated,need,available);
 		}
 		else if(strstr(command,"exit") != NULL){
 			printf("Exiting...\n");
 			return 0;
+		}
+		else{
+			printf("Please enter: RQ, RL, *, run or exit\n");
 		}
 	}
 
@@ -158,83 +158,114 @@ int main(int argc, char *argv[])
 }
 
 int release_resources(int max[][100], int allocated[][100], int need[][NUMBER_OF_RESOURCES], int input[], int customerID){
-	
-	int satisfied = 0;
-	// printf("release:\n");
-	// for(int i=0;i<4;i++){
-	// 	printf("%d",release[i]);
-	// }
+    
+    int satisfied = 0;
+    // printf("release:\n");
+    // for(int i=0;i<4;i++){
+    //     printf("%d",release[i]);
+    // }
 
-	//verifies whether it is satisfied
-	for(int i=0; i<4; i++){
-		if(allocated[customerID][i] < input[i]){
-			satisfied = -1;
-		}
-	}
+    //verifies whether it is satisfied
+    for(int i=0; i<4; i++){
+        if(allocated[customerID][i] < input[i]){
+            satisfied = -1;
+        }
+    }
 
-	//frees up allocated and max, changes need to be appropriate
-	if(satisfied == 0){
-		for(int i=0; i<4; i++){
-			allocated[customerID][i] = allocated[customerID][i] - input[i];
-			need[customerID][i] = need[customerID][i] + input[i]; 
-		}
-	}
+    //frees up allocated and max, changes need to be appropriate
+    if(satisfied == 0){
+        for(int i=0; i<4; i++){
+            allocated[customerID][i] = allocated[customerID][i] - input[i];
+            need[customerID][i] = need[customerID][i] + input[i]; 
+        }
+    }
 
-	// printf("\ncustomer ID:%d -> allocated resource:", customerID);
-	// for(int i = 0; i < 4; i++){
-	// 	printf("%d",allocated[customerID][i]);
-	// }
+    // printf("\ncustomer ID:%d -> allocated resource:", customerID);
+    // for(int i = 0; i < 4; i++){
+    //     printf("%d",allocated[customerID][i]);
+    // }
 
-	printf("\n");
-	return satisfied;
+    printf("\n");
+    return satisfied;
 }
-
-
-
 
 int request_resources(int max[][100], int allocated[][100], int need[][NUMBER_OF_RESOURCES], int input[], int customerID){
 
-	// printf("customer ID:%d -> max resource:", customerID);
-	// for(int i = 0; i < 4; i++){
-	// 	printf("%d",max[customerID][i]);
-	// }
+    // printf("customer ID:%d -> max resource:", customerID);
+    // for(int i = 0; i < 4; i++){
+    //     printf("%d",max[customerID][i]);
+    // }
 
-	// printf("\nallocated requested resource:");
-	// for(int i=0; i<4; i++){
-	// 	printf("%d",allocated[i]);
-	// }
-	int satisfied = 0;
+    // printf("\nallocated requested resource:");
+    // for(int i=0; i<4; i++){
+    //     printf("%d",allocated[i]);
+    // }
+    int satisfied = 0;
 
-	//verifies whether it is satisfied
-	for(int i=0; i<4; i++){
-		if(max[customerID][i] - input[i] < 0){
-			satisfied = -1;
-		}
-	}
+    //verifies whether it is satisfied
+    for(int i=0; i<4; i++){
+        if(max[customerID][i] - input[i] < 0){
+            satisfied = -1;
+        }
+    }
 
-	//NEED = MAX - ALLOCATED, changes max to be appropriate
-	if(satisfied == 0){
-		// printf("new need:\n");
-		for(int i=0; i<4; i++){
-			need[customerID][i] = max[customerID][i] - input[i];
-			allocated[customerID][i] = allocated[customerID][i] + input[i];
-		}
-	}
-	printf("\ncustomer ID:%d -> allocated resource:", customerID);
-	for(int i = 0; i < 4; i++){
-		printf("%d",allocated[customerID][i]);
-	}
-	// printf("\ncustomer ID:%d -> max resource:", customerID);
-	// for(int i = 0; i < 4; i++){
-	// 	printf("%d",allocated[customerID][i]);
-	// }
-	printf("\n");
+    //NEED = MAX - ALLOCATED, changes max to be appropriate
+    if(satisfied == 0){
+        // printf("new need:\n");
+        for(int i=0; i<4; i++){
+            need[customerID][i] = max[customerID][i] - input[i];
+            allocated[customerID][i] = allocated[customerID][i] + input[i];
+        }
+    }
+    printf("\ncustomer ID:%d -> allocated resource:", customerID);
+    for(int i = 0; i < 4; i++){
+        printf("%d",allocated[customerID][i]);
+    }
+    // printf("\ncustomer ID:%d -> max resource:", customerID);
+    // for(int i = 0; i < 4; i++){
+    //     printf("%d",allocated[customerID][i]);
+    // }
+    printf("\n");
 
-	return satisfied;
+    return satisfied;
 }
 
-
-
+void current_state(int max[][100], int allocated[][100], int need[NUMBER_OF_CUSTOMERS][NUMBER_OF_RESOURCES], int available[]) {
+	printf("Available\n");
+	for(int i = 0; i < 4; i++){
+		printf("%d ",available[i]);
+	}
+	printf("\nMaximum\n");
+	for(int i = 0; i < NUMBER_OF_CUSTOMERS; i++){
+		for(int j = 0; j < 4; j++){
+			printf("%d",max[i][j]);
+			if (j != 3){
+				printf(",");
+			}
+		}
+		printf("\n");
+	}
+	printf("Allocation\n");
+	for(int i = 0; i < NUMBER_OF_CUSTOMERS; i++){
+		for(int j = 0; j < 4; j++){
+			printf("%d",allocated[i][j]);
+			if (j != 3){
+				printf(",");
+			}
+		}
+		printf("\n");
+	}
+	printf("Need\n");
+	for(int i = 0; i < NUMBER_OF_CUSTOMERS; i++){
+		for(int j = 0; j < 4; j++){
+		printf("%d",need[i][j]);
+			if (j != 3){
+				printf(",");
+			}
+	}
+	printf("\n");
+	}
+}
 
 int readfile(char* filename, Customer** customers) {
 
