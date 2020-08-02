@@ -33,17 +33,18 @@ To run your program:
 ```
 int request_resources() Brian
 int release_resources() Brian
-int * safety_algorithm() Chrsitine/Brian
+int * safety_algorithm() Brian
+void *threadRun() Christine
 void current_state() Christine
 int readfile() Christine
 int main() Christine/Brian
 ```
 ## Features
-RQ - request resources
-RL -  release resources
-* - print out the current state
-run - find the safe sequence
-q - exit
+'RQ' - request resources</p>
+'RL' -  release resources</p>
+'*' - print out the current state</p>
+'run' - find the safe sequence</p>
+'q' - exit
 ## Tests
 See screenshots
 ## Code Example
