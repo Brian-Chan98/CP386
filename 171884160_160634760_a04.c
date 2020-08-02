@@ -150,9 +150,11 @@ int main(int argc, char *argv[])
 		else if(strstr(command,"run") != NULL){
 			int *p;
 			p = safety_algorithm(allocated, need, available);
+			printf("Safe Sequence is <");
 			for(int i = 0; i < NUMBER_OF_CUSTOMERS;i++){
-				printf("%d",*(p+i));
+				printf("%d ",*(p+i));
 			}
+			printf(">\n");
 		}
 		else if(strstr(command,"*") != NULL){
 			current_state(max,allocated,need,available);
