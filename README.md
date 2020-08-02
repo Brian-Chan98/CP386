@@ -27,8 +27,8 @@ To run your program:
 *replace '10 5 7 8' with 4 ints to represent the number of resources available*
 
 ## Screenshots
-![Image 1](https://github.com/ChristineAu-yeung/CP386/blob/master/Screenshot%20of%20Code.jpg)</p>
-![Image 2](https://github.com/ChristineAu-yeung/CP386/blob/master/Screenshot%20of%20Code%202.jpg)
+![Image 1](https://github.com/ChristineAu-yeung/CP386/blob/master/Screenshots/Screenshot%20of%20Code.jpg)</p>
+![Image 2](https://github.com/ChristineAu-yeung/CP386/blob/master/Screenshots/Screenshot%20of%20Code%201.jpg)
 ## Individual contribution (Function-wise)
 ```
 int request_resources() Brian
