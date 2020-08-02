@@ -27,15 +27,30 @@ To run your program:
 *replace '10 5 7 8' with 4 ints to represent the number of resources available*
 
 ## Screenshots
+![Image 1](https://github.com/ChristineAu-yeung/CP386/blob/master/Screenshot%20of%20Code.jpg)</p>
+![Image 2](https://github.com/ChristineAu-yeung/CP386/blob/master/Screenshot%20of%20Code%202.jpg)
 ## Individual contribution (Function-wise)
+```
+int request_resources() Brian
+int release_resources() Brian
+int * safety_algorithm() Chrsitine/Brian
+void current_state() Christine
+int readfile() Christine
+int main() Christine/Brian
+```
+## Features
+RQ - request resources
+RL -  release resources
+* - print out the current state
+run - find the safe sequence
+q - exit
+## Tests
+See screenshots
+## Code Example
+See screenshots
+## Authors
 Brian Chan 171884160 [Github](https://github.com/Brian-Chan98)</p>
 Christine Au-yeung 160634760 [Github](https://github.com/ChristineAu-yeung)
-## Features
-## Tests
-## Code Example
-## Authors
-Brian Chan</p>
-Christine Au-yeung
 ## Credits 
 Brian Chan</p>
 Christine Au-yeung
