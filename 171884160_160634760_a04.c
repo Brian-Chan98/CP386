@@ -32,6 +32,7 @@ int release_resources(int max[][100], int allocated[][100], int need[NUMBER_OF_C
 int * safety_algorithm(int allocated[][100], int need[NUMBER_OF_CUSTOMERS][NUMBER_OF_RESOURCES], int available[]);
 void current_state(int max[][100], int allocated[][100], int need[NUMBER_OF_CUSTOMERS][NUMBER_OF_RESOURCES], int available[]);
 int readfile(char* file_name, Customer** customers);
+void *threadRun(void *t);
 int safe_seq[10];
 
 int main(int argc, char *argv[])
@@ -86,7 +87,7 @@ int main(int argc, char *argv[])
 	char* command = malloc(sizeof(char*)*300);
 	while(1){
 	// printf("%s",command);
-		printf("Enter a command (q to Exit): ");
+		printf("Enter a command ('exit' to Exit): ");
         fgets(command, 100, stdin);
 
 		char* token = strtok(command, " ");
@@ -155,11 +156,22 @@ int main(int argc, char *argv[])
 				printf("%d ",*(p+i));
 			}
 			printf(">\n");
+			// threading, fix interactive loop
+			pthread_t t1;
+			for(int i = 0; i < 5;i++){
+				int pthread = *(p);
+				pthread = pthread_create(&t1, NULL, threadRun, &p[i]);
+				if (pthread != 0)
+					{
+						printf("Error");
+					}
+			}
+			pthread_exit(NULL); // breaks loop, but need for threads
 		}
 		else if(strstr(command,"*") != NULL){
 			current_state(max,allocated,need,available);
 		}
-		else if(strstr(command,"q") != NULL){
+		else if(strstr(command,"exit") != NULL){
 			printf("Exiting...\n");
 			return 0;
 		}
@@ -168,6 +180,22 @@ int main(int argc, char *argv[])
 		}
 	}
 	printf("\n");
+}
+
+void *threadRun(void *t){
+	int *threadID = (int*)t;
+	printf("--> Customer/Thread %d\n", *threadID);
+	printf("	Allocated resources:\n");
+	// for(int i = 0; i < NUMBER_OF_CUSTOMERS; i++){
+	// 	printf("%d",allocated[*threadID][i]);
+	// }
+	printf("	Needed:\n");
+	printf("	Available:\n");
+	printf("	Thread has started:\n");
+	printf("	Thread has finished:\n");
+	printf("	Thread is releasing resources:\n");
+	printf("	New Available:\n");
+	return 0;
 }
 
 int * safety_algorithm(int allocated[][100], int need[NUMBER_OF_CUSTOMERS][NUMBER_OF_RESOURCES], int available[]){
