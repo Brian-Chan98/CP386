@@ -1,10 +1,8 @@
 /*
 Brian Chan 171884160 
 Github: BrianChan98
-
 Christine Au-yeung 160634760 
 Github: ChristineAu-yeung
-
 Github Repository: https://github.com/ChristineAu-yeung/CP386
 Submitted: Aug 1/2020
 */
