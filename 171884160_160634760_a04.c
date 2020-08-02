@@ -1,3 +1,12 @@
+/*
+Brian Chan 171884160 
+Github: BrianChan98
+Christine Au-yeung 160634760 
+Github: ChristineAu-yeung
+Github Repository: https://github.com/ChristineAu-yeung/CP386
+Submitted: Aug 1/2020
+*/
+
 #include <stdio.h>
 #include <unistd.h>
 #include <stdlib.h>
@@ -77,7 +86,7 @@ int main(int argc, char *argv[])
 	char* command = malloc(sizeof(char*)*300);
 	while(1){
 	// printf("%s",command);
-		printf("Enter a command: ");
+		printf("Enter a command (q to Exit): ");
         fgets(command, 100, stdin);
 
 		char* token = strtok(command, " ");
@@ -148,7 +157,7 @@ int main(int argc, char *argv[])
 		else if(strstr(command,"*") != NULL){
 			current_state(max,allocated,need,available);
 		}
-		else if(strstr(command,"exit") != NULL){
+		else if(strstr(command,"q") != NULL){
 			printf("Exiting...\n");
 			return 0;
 		}
