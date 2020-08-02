@@ -184,7 +184,10 @@ int * safety_algorithm(int allocated[][100], int need[NUMBER_OF_CUSTOMERS][NUMBE
 		if(check[j] == 0){
 			safe = 0; 
 			for(int k=0;k<NUMBER_OF_RESOURCES;k++){
-				if(need[j][k] > available[k]){
+				if(need[j][k] <= available[k]){
+					safe = 0;
+				}
+				else{
 					safe = -1;
 					break;
 				}
