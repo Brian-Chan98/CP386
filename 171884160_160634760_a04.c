@@ -1,3 +1,14 @@
+/*
+Brian Chan 171884160 
+Github: BrianChan98
+
+Christine Au-yeung 160634760 
+Github: ChristineAu-yeung
+
+Github Repository: https://github.com/ChristineAu-yeung/CP386
+Submitted: Aug 1/2020
+*/
+
 #include <stdio.h>
 #include <unistd.h>
 #include <stdlib.h>
@@ -20,9 +31,10 @@ typedef struct customer {
 
 int request_resources(int max[][100], int allocated[][100], int need[NUMBER_OF_CUSTOMERS][NUMBER_OF_RESOURCES], int input[], int customerID); // RQ
 int release_resources(int max[][100], int allocated[][100], int need[NUMBER_OF_CUSTOMERS][NUMBER_OF_RESOURCES], int input[], int customerID); // RL
-int safety_algo(int customer_num);
+int * safety_algorithm(int allocated[][100], int need[NUMBER_OF_CUSTOMERS][NUMBER_OF_RESOURCES], int available[]);
 void current_state(int max[][100], int allocated[][100], int need[NUMBER_OF_CUSTOMERS][NUMBER_OF_RESOURCES], int available[]);
 int readfile(char* file_name, Customer** customers);
+int safe_seq[10];
 
 int main(int argc, char *argv[])
 {
@@ -76,7 +88,7 @@ int main(int argc, char *argv[])
 	char* command = malloc(sizeof(char*)*300);
 	while(1){
 	// printf("%s",command);
-		printf("Enter a command: ");
+		printf("Enter a command (q to Exit): ");
         fgets(command, 100, stdin);
 
 		char* token = strtok(command, " ");
@@ -129,22 +141,25 @@ int main(int argc, char *argv[])
 			for(int i=0;i<4;i++){
 				input[i] = array[i+2];
 			}
-			satisfied = release_resources( max, allocated, need, input, customerID);
+			satisfied = release_resources(max, allocated, need, input, customerID);
 			
 			if(satisfied == 0){
 				printf("Request is satisfied\n");
 			}else{
 				printf("Request is unstatisfied\n");
 			}
-
 		}
 		else if(strstr(command,"run") != NULL){
-			printf("run\n");
+			int *p;
+			p = safety_algorithm(allocated, need, available);
+			for(int i = 0; i < NUMBER_OF_CUSTOMERS;i++){
+				printf("%d",*(p+i));
+			}
 		}
 		else if(strstr(command,"*") != NULL){
 			current_state(max,allocated,need,available);
 		}
-		else if(strstr(command,"exit") != NULL){
+		else if(strstr(command,"q") != NULL){
 			printf("Exiting...\n");
 			return 0;
 		}
@@ -152,9 +167,42 @@ int main(int argc, char *argv[])
 			printf("Please enter: RQ, RL, *, run or exit\n");
 		}
 	}
-
-
 	printf("\n");
+}
+
+int * safety_algorithm(int allocated[][100], int need[NUMBER_OF_CUSTOMERS][NUMBER_OF_RESOURCES], int available[]){
+	// need <= available
+	// available + allocation = new available if safe
+	// safe sequence array
+
+	int check[5], safe = 0, index = 0;
+	for(int a = 0; a<NUMBER_OF_CUSTOMERS;a++){
+		check[a] = 0;
+	}
+ 
+	for(int j = 0; j < NUMBER_OF_CUSTOMERS; j++){
+		if(check[j] == 0){
+			safe = 0; 
+			for(int k=0;k<NUMBER_OF_RESOURCES;k++){
+				if(need[j][k] > available[k]){
+					safe = -1;
+					break;
+				}
+			}
+			if (safe == 0){
+				safe_seq[index] = j;
+				index++;
+				for(int b = 0; b < NUMBER_OF_RESOURCES; b++){
+					available[b] = available[b] + allocated[j][b];
+				}
+				check[j] = -1;
+			}
+		}	
+	}
+			// for(int i = 0; i < NUMBER_OF_CUSTOMERS;i++){
+			// 	printf("%d",safe_seq[i]);
+			// }
+	return safe_seq;
 }
 
 int release_resources(int max[][100], int allocated[][100], int need[][NUMBER_OF_RESOURCES], int input[], int customerID){
