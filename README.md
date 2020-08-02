@@ -30,7 +30,7 @@ To run your program:
 ![Image 1](https://github.com/ChristineAu-yeung/CP386/blob/master/Screenshot%20of%20Code.jpg)</p>
 ![Image 2](https://github.com/ChristineAu-yeung/CP386/blob/master/Screenshot%20of%20Code%202.jpg)
 ## Individual contribution (Function-wise)
-```c
+```
 int request_resources() Brian
 int release_resources() Brian
 int * safety_algorithm() Chrsitine/Brian
